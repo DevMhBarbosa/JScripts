@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculadora Simples</title>
+        <script>
+            // Função para calcular a raiz quadrada
+            function calcularRaizQuadrada() {
+                let numero = parseFloat(document.getElementById("auxiliar").value);
+                if (numero < 0) {
+                    alert("Não é possível calcular a raiz quadrada de um número negativo.");
+                    return;
+                }
+                let resultado = Math.sqrt(numero);
+                document.getElementById("mostrador").value = resultado;
+            }
+
+            // Função para calcular a potência de 2
+            function calcularPotenciaDeDois() {
+                let expoente = parseInt(document.getElementById("auxiliar").value);
+                if (isNaN(expoente)) {
+                    alert("Por favor, insira um número válido.");
+                    return;
+                }
+                let resultado = Math.pow(2, expoente);
+                document.getElementById("mostrador").value = resultado;
+            }
+
+            // Função para calcular potência de qualquer número elevado ao grau n
+            function calcularPotencia() {
+                let valores = document.getElementById("auxiliar").value.split(',');
+                let base = parseFloat(valores[0]);
+                let expoente = parseInt(valores[1]);
+
+                if (isNaN(base) || isNaN(expoente)) {
+                    alert("Por favor, insira números válidos.");
+                    return;
+                }
+                let resultado = Math.pow(base, expoente);
+                document.getElementById("mostrador").value = resultado;
+            }
+
+            // Função para limpar a tela
+            function limparTela() {
+                document.getElementById("auxiliar").value = "";
+                document.getElementById("mostrador").value = "";
+                document.getElementById("operador").value = "";
+            }
+
+            // Função para atualizar o visor com o número pressionado
+            function atualizarVisor(valor) {
+                let visor = document.getElementById("auxiliar");
+                visor.value += valor;
+            }
+
+            // Função para calcular o resultado de uma operação (já existente)
+            function calcularResultado() {
+                let resultado = eval(document.getElementById("auxiliar").value);
+                document.getElementById("mostrador").value = resultado;
+                document.getElementById("auxiliar").value = resultado;
+            }
+
+            // Função para limpar o último número inserido
+            function limparUltimoNumero() {
+                let visor = document.getElementById("auxiliar");
+                visor.value = visor.value.slice(0, -1);
+            }
+
+            // Atribuindo eventos aos botões
+            document.addEventListener("DOMContentLoaded", function() {
+                // Atribuindo os botões numéricos e operacionais
+                document.querySelectorAll(".num").forEach(function(button) {
+                    button.addEventListener("click", function() {
+                        atualizarVisor(button.value);
+                    });
+                });
+
+                // Atribuindo eventos aos botões de operações
+                document.getElementById("bi").addEventListener("click", calcularResultado);
+                document.getElementById("sqrt").addEventListener("click", calcularRaizQuadrada);
+                document.getElementById("power").addEventListener("click", calcularPotenciaDeDois);
+                document.getElementById("power_n").addEventListener("click", calcularPotencia);
+                document.getElementById("bsub").addEventListener("click", limparUltimoNumero);
+                document.getElementById("bd").addEventListener("click", function() {
+                    atualizarVisor("/");
+                });
+                document.getElementById("bm").addEventListener("click", function() {
+                    atualizarVisor("*");
+                });
+                document.getElementById("bs").addEventListener("click", function() {
+                    atualizarVisor("+");
+                });
+                document.getElementById("bp").addEventListener("click", function() {
+                    atualizarVisor("");
+                });
+                document.getElementById("limpar").addEventListener("click", limparTela);
+            });
+        </script>
+        <link rel="stylesheet" href="css/meuCSS.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Calculadora</h1>
+            <div id="relogio"></div>
+            <form id="calculadora">
+                <input type="text" class="disp" id="auxiliar" value="" disabled/><br>
+                <input type="text" class="disp" id="mostrador" value="" disabled/><br>
+
+                <input type="button" id="b7" class="num" value="7" />
+                <input type="button" id="b8" class="num" value="8" />
+                <input type="button" id="b9" class="num" value="9" />
+                <input type="button" id="bm" class="opera" value="X" />
+                <br>
+                <input type="button" id="b4" class="num" value="4" />
+                <input type="button" id="b5" class="num" value="5" />
+                <input type="button" id="b6" class="num" value="6" />
+                <input type="button" id="bd" class="opera" value="/" />
+                <br>
+                <input type="button" id="b1" class="num" value="1" />
+                <input type="button" id="b2" class="num" value="2" />
+                <input type="button" id="b3" class="num" value="3" />
+                <input type="button" id="bs" class="opera" value="+" />
+                <br>
+                <input type="button" id="b0" class="num" value="0" />
+                <input type="button" id="bp" class="num" value="." />
+                <input type="button" id="bi" class="opera" value="=" />
+                <input type="button" id="bsub" class="opera" value="-" style="color:green; background-color: black; text-align:left;" />
+                <br>
+                <!-- Botões para as funções extras -->
+                <input type="button" id="sqrt" class="opera" value="√" />
+                <input type="button" id="power" class="opera" value="x²" />
+                <input type="button" id="power_n" class="opera" value="xⁿ" />
+                <input type="button" id="limpar" class="opera" value="L" />
+            </form>
+        </div>
+    </body>
+</html>
